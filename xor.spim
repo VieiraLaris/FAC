@@ -1,0 +1,53 @@
+.data
+imprime1: .asciiz "1\n"
+imprime2: .asciiz "2\n"
+vetor: .space 5
+
+.text
+
+main:
+    li $v0, 5
+    syscall
+    move $t0, $v0  
+
+    add $t3, $zero, $zero
+
+    
+    while:
+        beq $t3, $t0, saida
+
+        li $v0, 8
+        la $a0, vetor
+        syscall
+
+        lb $t1, 0($a0)
+        lb $t2, 2($a0)  
+
+        beq $t1, $t2, igual  
+        bne $t1, $t2, diferente  
+
+    igual:
+        li $v0, 4
+        la $a0, imprime1
+        syscall
+        j proximo
+
+    diferente:
+        li $v0, 4
+        la $a0, imprime2
+        syscall
+        j proximo
+
+    proximo:
+        addi $t3, $t3, 1        
+        j while
+
+    saida:
+        li $v0, 10
+        syscall
+
+
+        
+
+
+

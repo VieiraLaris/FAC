@@ -1,0 +1,31 @@
+.text
+
+main:   li $v0, 5 
+        syscall
+
+        move $t0, $v0
+
+        li $v0, 5 
+        syscall
+
+        move $t1, $v0
+
+        li $v0, 5
+        syscall
+
+        move $t2, $v0
+
+        li $t3, 32
+        li $t4, 1
+
+        sub $s0, $t3, $t2
+        sub $s1, $t2, $t4
+        mul $s2, $t1, $s1
+        add $s3, $t0, $s2
+        mul $s4, $s0, $s3
+
+        li $v0, 1
+        move $a0, $s4
+        syscall
+
+        jr $ra
