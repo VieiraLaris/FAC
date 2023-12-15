@@ -1,0 +1,55 @@
+.data
+    quebra: .asciiz "\n"
+    deu_overflow: .asciiz "overflow"
+
+.text
+main:
+    #lendo o diferenciador
+    li $v0, 5
+    syscall
+    move $t0, $v0
+
+    #lendo o primeiro inteiro
+    li $v0, 5
+    syscall
+    move $t1, $v0
+
+    #lendo o segundo inteiro
+    li $v0, 5
+    syscall
+    move $t2, $v0
+
+    com_sinal:
+        addu $t3, $t1, $t2
+        xor $t4, $t1, $t2
+        slt $t4, $t4, $zero
+        bne $t4, $zero, sem_overflow
+
+        xor $t4, $t3, $t1
+        slt $t4, $t4, $zero
+        bne $t4, $zero, overflow
+
+
+    sem_overflow:
+        add $t6, $t1, $t2
+
+        li $v0, 1
+        move $a0, $t6
+        syscall
+
+        li $v0, 4
+        la $a0, quebra
+        syscall
+
+        jr $ra
+    
+    overflow:
+        li $v0, 4
+        la $a0, deu_overflow
+        syscall
+
+        li $v0, 4
+        la $a0, quebra
+        syscall
+
+        jr $ra

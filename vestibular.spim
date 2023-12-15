@@ -1,0 +1,58 @@
+.data
+    quebra: .asciiz "\n"
+    resp: .space 200
+    gab: .space 200
+
+.text
+
+main:
+    li $s1, 0 
+	li $s2, 0 
+
+	li $v0, 5
+	syscall
+	move $s3, $v0
+
+	li $v0, 8
+	la $a0, gab
+	li $a1, 200
+	syscall
+	
+	la $t1, gab
+	lb $t2, 0($t1)
+
+	li $v0, 8
+	la $a0, resp
+	li $a1, 200
+	syscall
+	
+	la $t3, resp
+	lb $t4, 0($t3)
+	
+if:
+    beq	$t2, $t4, contador
+	j continua
+
+contador: 
+    addi $s2, $s2, 1
+	
+continua:	
+    addi $t1, $t1, 1
+	addi $t3, $t3, 1
+	
+	lb $t2, 0($t1)
+	lb $t4, 0($t3)
+
+	addi $s1, $s1, 1
+
+	bne	$s3, $s1, if
+	
+	li $v0, 1
+	move $a0, $s2
+	syscall
+
+    li $v0, 4
+    la $a0, quebra
+    syscall
+
+	jr $ra

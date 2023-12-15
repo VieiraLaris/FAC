@@ -1,0 +1,22 @@
+contaBits:
+
+    li $v0, 0                
+    li $t1, 1
+    li $t3, 32                
+
+    while:
+        beq $t3, $zero, end   
+
+        and $t0, $a0, $t1      
+        add $v0, $v0, $t0     
+
+        srl $a0, $a0, 1
+
+        addi $t3, -1        
+
+        j while
+
+    end:
+        jr $ra
+
+

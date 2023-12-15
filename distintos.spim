@@ -1,0 +1,30 @@
+.text
+elemDistintos:
+
+    beq $a1, $zero, end    
+
+    lw $t0, 0($a0)          
+    li $t1, 1               
+
+    while:
+        beq $a1, $zero, end  
+
+        add $a0, $a0, 4      
+        lw $t2, 0($a0)       
+
+        bne $t2, $t0, contador  
+
+        j while
+
+    contador:
+        addi $t1, $t1, 1     
+        move $t0, $t2        
+        j while
+
+    end:
+        move $v0, $t1         
+        jr $ra               
+        
+        
+                
+
