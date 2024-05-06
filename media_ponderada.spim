@@ -1,0 +1,50 @@
+.data
+zero: .float 0.0
+quebra: .asciiz "\n"
+
+.text
+main:
+    #lendo o N
+    li $v0, 5
+    syscall
+    move $t0, $v0
+
+    loop:
+        beq $t0, $zero, end
+
+        #lendo o numero
+        li $v0, 6
+        syscall
+        lwc1 $f1, zero
+        add.s $f2, $f1, $f0
+
+        #lendo o peso
+        li $v0, 6
+        syscall
+        lwc1 $f1, zero
+        add.s $f3, $f1, $f0
+
+        mul.s $f4, $f2, $f3
+
+        add.s $f5, $f5, $f4
+
+        addi $t0, $t0, -1
+
+        lwc1 $f2, zero
+        lwc1 $f3, zero
+
+        j loop
+    
+    end:
+        lwc1 $f1, zero
+        add.s $f12, $f1, $f5
+
+        li $v0, 2
+        syscall
+
+        li $v0, 4
+        la $a0, quebra
+        syscall
+
+        li $v0, 10
+        syscall
